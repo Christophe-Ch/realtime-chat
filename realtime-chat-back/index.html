@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-time chat test website</title>
+  </head>
+  <body>
+    <label for="m">Message : </label>
+    <input type="text" id="m" />
+    <label for="m">Dest : </label>
+    <input type="text" id="dest" />
+    <button onclick="sendMessage()">Send</button>
+
+    <ul id="messages"></ul>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"></script>
+    <script>
+      var socket = io("http://localhost:3000", { autoConnect: false });
+
+      socket.on("session", ({ session, user }) => {
+        console.log(session, user);
+      });
+
+      socket.on("message", ({ message, from }) => {
+        appendMessage(message, from);
+      });
+
+      socket.on("connect_error", (err) => {
+        console.error(err.message);
+      });
+
+      socket.on("user-disconnection", (username) => {
+        console.log(`${username} is disconnected`);
+      });
+
+      const sendMessage = () => {
+        socket.emit("message", {
+          message: document.getElementById("m").value,
+          to: document.getElementById("dest").value,
+        });
+
+        appendMessage(document.getElementById("m").value, "me");
+      };
+
+      const appendMessage = (message, from) => {
+        const li = document.createElement("li");
+        li.innerText = `${from}: ${message}`;
+        document.getElementById("messages").append(li);
+      };
+
+      socket.auth = {
+        username: "ChriisX",
+        sessionID: "9da4fe09-d0c0-467c-a2e1-e465a4510eaa",
+      };
+      socket.connect();
+    </script>
+  </body>
+</html>
