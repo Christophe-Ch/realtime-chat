@@ -1,7 +1,7 @@
-const onDisconnection = (socket, io) => {
+const handlers = (socket, io) => {
   socket.on("disconnect", async () => {
     socket.broadcast.emit("user-disconnection", socket.username);
   });
 };
 
-module.exports = onDisconnection;
+module.exports = handlers;

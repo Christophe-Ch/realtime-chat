@@ -1,4 +1,4 @@
-const messageHandler = require("./messageHandler");
-const disconnectionHandler = require("./onDisconnectionHandler");
+const messageHandlers = require("./messageHandlers");
+const disconnectionHandlers = require("./disconnectionHandlers");
 
-module.exports = [messageHandler, disconnectionHandler];
+module.exports = [messageHandlers, disconnectionHandlers];

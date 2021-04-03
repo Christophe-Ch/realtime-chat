@@ -13,6 +13,7 @@ class Storage {
 
     this.sessions = new CollectionHandler(this.db.collection("sessions"));
     this.users = new CollectionHandler(this.db.collection("users"));
+    this.messages = new CollectionHandler(this.db.collection("messages"));
   }
 }
 
@@ -25,8 +26,8 @@ class CollectionHandler {
     return this.collection.findOne(options);
   }
 
-  getAll() {
-    return this.collection.find({});
+  getAll(options = {}) {
+    return this.collection.find(options);
   }
 
   insert(...documents) {

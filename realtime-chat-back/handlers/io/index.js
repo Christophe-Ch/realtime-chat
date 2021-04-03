@@ -1,3 +1,3 @@
-const onConnect = require("./connectionHandler");
+const onConnect = require("./connectionHandlers");
 
 module.exports = [onConnect];

@@ -35,6 +35,10 @@
         console.log(`${username} is disconnected`);
       });
 
+      socket.on("users", (users) => {
+        console.log(users);
+      });
+
       const sendMessage = () => {
         socket.emit("message", {
           message: document.getElementById("m").value,
