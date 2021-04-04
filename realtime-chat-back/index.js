@@ -1,8 +1,12 @@
 const app = require("express")();
-const http = require("http").Server(app);
-const io = require("socket.io")(http, {
+const server = app.listen(3000, () => {
+  console.log("listening on port 3000");
+});
+
+const io = require("socket.io")(server, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:8080",
+    credentials: true,
   },
 });
 
@@ -16,8 +20,4 @@ handlers.forEach((handler) => handler(io));
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
-});
-
-http.listen(3000, () => {
-  console.log("listening on port 3000");
 });
